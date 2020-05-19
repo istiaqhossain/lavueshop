@@ -1,18 +1,25 @@
 <template>
     <div>
-        <div class="container">
-            <h1 class="display-4 text-center my-5">{{ name }}</h1>
-        </div>
+        <component :is="layout">
+            <router-view></router-view>
+        </component>
     </div>
 </template>
 
 <script>
+import Default_Layout from './Default'
+import Auth_Layout from './Auth'
+
 export default {
     name: 'Master',
-    data() {
-        return {
-            name: 'Lavueshop'      
-        }
+    components: {
+        Default_Layout,
+        Auth_Layout,
     },
+    computed: {
+        layout() {
+            return (this.$route.meta.layout) ? this.$route.meta.layout : 'Default_Layout';
+        }
+    }
 }
 </script>
