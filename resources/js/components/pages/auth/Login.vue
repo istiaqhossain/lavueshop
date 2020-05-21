@@ -37,7 +37,13 @@
                           <div class="form-group">
                             <label class="text-gray-600">Password</label>
                             <validation-provider name="Password" rules="required|min:6" v-slot="{ errors }">
-                            <input type="password" class="form-control form-control-user" v-model="password">
+                            <div class="password-wrap">
+                              <input v-bind:type="password_field" class="form-control form-control-user" v-model="password">
+                              <button type="button" v-on:click="togglePassType">
+                                <i v-if="password_hide" class="fas fa-eye"></i>
+                                <i v-if="!password_hide" class="fas fa-eye-slash"></i>
+                              </button>
+                            </div>
                             <span class="text-danger small d-block mt-2">{{ errors[0] }}</span>
                             </validation-provider>
                           </div>
@@ -96,6 +102,8 @@ export default {
           password: '',
           error: '',
           loading: false,
+          password_field: 'password',
+          password_hide: true,
         }
     },
     methods: {
@@ -115,7 +123,15 @@ export default {
           this.error = 'Invalid email or password. Please try again.';
           this.password = '';
         });
-      }
+      },
+      togglePassType() {
+        if(this.password_field == 'password') {
+            this.password_field = 'text';
+        } else {
+            this.password_field = 'password';
+        }
+        this.password_hide = !this.password_hide;
+      },
     },
 }
 </script>

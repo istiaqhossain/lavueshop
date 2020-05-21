@@ -19,6 +19,28 @@
 }
 
 form.user {
+    .form-group {
+        .password-wrap {
+            position: relative;
+            button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 50px;
+                height: 100%;
+                background-color: transparent;
+                border: 0px solid;
+                i {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 19px;
+                    color: $gray-500;
+                }
+            }
+        }
+    }
     .custom-checkbox.small {
         label {
             line-height: 1.5rem;
