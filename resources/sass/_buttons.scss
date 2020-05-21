@@ -1,52 +1,73 @@
+.btn-primary {
+    .loading {
+        border: 4px solid $white;
+        border-top: 4px solid $gray-700;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: spin 2s linear infinite;
+        margin: 0 auto;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .btn-circle {
-  border-radius: 100%;
-  height: 2.5rem;
-  width: 2.5rem;
-  font-size: 1rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  &.btn-sm {
-    height: 1.8rem;
-    width: 1.8rem;
-    font-size: 0.75rem;
-  }
-  &.btn-lg {
-    height: 3.5rem;
-    width: 3.5rem;
-    font-size: 1.35rem;
-  }
+    border-radius: 100%;
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    &.btn-sm {
+        height: 1.8rem;
+        width: 1.8rem;
+        font-size: 0.75rem;
+    }
+    &.btn-lg {
+        height: 3.5rem;
+        width: 3.5rem;
+        font-size: 1.35rem;
+    }
 }
 
 .btn-icon-split {
-  padding: 0;
-  overflow: hidden;
-  display: inline-flex;
-  align-items: stretch;
-  justify-content: center;
-  .icon {
-    background: fade-out($black, .85);
-    display: inline-block;
-    padding: $btn-padding-y $btn-padding-x;
-  }
-  .text {
-    display: inline-block;
-    padding: $btn-padding-y $btn-padding-x;
-  }
-  &.btn-sm {
+    padding: 0;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: stretch;
+    justify-content: center;
     .icon {
-      padding: $btn-padding-y-sm $btn-padding-x-sm;
+        background: fade-out($black, .85);
+        display: inline-block;
+        padding: $btn-padding-y $btn-padding-x;
     }
     .text {
-      padding: $btn-padding-y-sm $btn-padding-x-sm;
+        display: inline-block;
+        padding: $btn-padding-y $btn-padding-x;
     }
-  }
-  &.btn-lg {
-    .icon {
-      padding: $btn-padding-y-lg $btn-padding-x-lg;
+    &.btn-sm {
+        .icon {
+            padding: $btn-padding-y-sm $btn-padding-x-sm;
+        }
+        .text {
+            padding: $btn-padding-y-sm $btn-padding-x-sm;
+        }
     }
-    .text {
-      padding: $btn-padding-y-lg $btn-padding-x-lg;
+    &.btn-lg {
+        .icon {
+            padding: $btn-padding-y-lg $btn-padding-x-lg;
+        }
+        .text {
+            padding: $btn-padding-y-lg $btn-padding-x-lg;
+        }
     }
-  }
 }

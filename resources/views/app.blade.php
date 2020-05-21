@@ -12,6 +12,11 @@
         <link href="{{ asset('fontawesome-free-5.13.0-web/css/all.min.css') }}" rel="stylesheet" type="text/css">
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+        <script type="text/javascript">
+            window.api_url = "{{ url('/api') }}";
+        </script>
+
     </head>
     <body>
         <div id="app"></div>

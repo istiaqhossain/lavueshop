@@ -12,21 +12,41 @@
                   
                       <div class="p-5">
                         <div class="text-center">
-                          <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                          <router-link :to="{name:'home'}">
+                            <h2 class="h2 mb-3 text-primary font-weight-bolder">Lavueshop</h2>  
+                          </router-link>
                         </div>
-                        <form class="user" method="" action="">
+                        <div class="text-center">
+                          <h5 class="h5 text-gray-900 mb-4">Welcome Back!</h5>
+                        </div>
+                        <div v-if="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                          {{ error }}
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <ValidationObserver v-slot="{ handleSubmit }">
+                        <form class="user" v-on:submit.prevent="handleSubmit(login)">
                           <div class="form-group">
-                            <label class="text-gray-600" for="emailExample">Email address</label>
-                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" autofocus>
+                            <label class="text-gray-600">Email address</label>
+                            <validation-provider name="Email" rules="required|email" v-slot="{ errors }">
+                            <input type="email" class="form-control form-control-user" aria-describedby="emailHelp" v-model="email">
+                            <span class="text-danger small d-block mt-2">{{ errors[0] }}</span>
+                            </validation-provider>
                           </div>
                           <div class="form-group">
-                            <label class="text-gray-600" for="passwordExample">Password</label>
-                            <input type="password" class="form-control form-control-user" id="exampleInputPassword">
+                            <label class="text-gray-600">Password</label>
+                            <validation-provider name="Password" rules="required|min:6" v-slot="{ errors }">
+                            <input type="password" class="form-control form-control-user" v-model="password">
+                            <span class="text-danger small d-block mt-2">{{ errors[0] }}</span>
+                            </validation-provider>
                           </div>
-                          <button type="button" class="btn btn-primary btn-user btn-block">
-                            Login
+                          <button v-bind:disabled="loading" type="submit" class="btn btn-primary btn-user btn-block">
+                            <div v-if="loading" class="loading"></div>
+                            <span v-if="!loading">Login</span>
                           </button>
                         </form>
+                        </ValidationObserver>
                         <hr>
                         <div class="text-center">
                           <router-link :to="{name:'home'}" class="">
@@ -48,11 +68,54 @@
 </template>
 
 <script>
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
+import { required, email, min } from 'vee-validate/dist/rules';
+
+extend('min', {
+  validate(value, args) {
+    return value.length >= args.length;
+  },
+  params: ['length'],
+  message: '{_field_} must be at least {length} characters'
+});
+extend('email', email);
+extend('required', {
+  ...required,
+  message: '{_field_} is required!'
+});
+
 export default {
     name: 'Login',
+    components: {
+      ValidationProvider,
+      ValidationObserver
+    },
     data() {
         return {
+          email: '',
+          password: '',
+          error: '',
+          loading: false,
         }
+    },
+    methods: {
+      login(){ 
+        this.loading = true;
+        var credentials = {
+          email: this.email,
+          password: this.password,
+        };
+        this.$store.dispatch('retriveToken',credentials)
+        .then(response => {
+          this.loading = false;
+          this.$router.push({name:'admin'});
+        })
+        .catch(error => {
+          this.loading = false;
+          this.error = 'Invalid email or password. Please try again.';
+          this.password = '';
+        });
+      }
     },
 }
 </script>

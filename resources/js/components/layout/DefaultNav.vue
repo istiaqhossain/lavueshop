@@ -11,13 +11,22 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
+            <li v-if="loggedIn" class="nav-item">
+              <router-link :to="{name:'admin'}" class="nav-link">
+                <span>Dashboard</span>
+              </router-link>
+            </li>
+            
             <div class="topbar-divider d-none d-sm-block"></div>
 
-            <!-- Nav Item - User Information -->
             <li class="nav-item">
-              <router-link :to="{name:'login'}" class="nav-link">
+              <router-link v-if="!loggedIn" :to="{name:'login'}" class="nav-link">
                 <i class="fas fa-sign-in-alt mr-2"></i> 
                 <span>Login</span>
+              </router-link>
+              <router-link v-if="loggedIn" :to="{name:'logout'}" class="nav-link">
+                <i class="fas fa-sign-out-alt mr-2"></i> 
+                <span>Logout</span>
               </router-link>
             </li>
 
@@ -35,6 +44,11 @@ export default {
         toggleSidebar() {
             this.$store.dispatch('toggleSidebar');
         }
+    },
+    computed: {
+        loggedIn() {
+            return this.$store.getters.loggedIn;
+        },
     },
 }
 </script>

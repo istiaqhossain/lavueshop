@@ -3,12 +3,16 @@ import store from './store'
 import VueRouter from 'vue-router'
 import HomePage from './components/pages/HomePage'
 import Login from './components/pages/auth/Login'
+import Logout from './components/pages/auth/Logout'
+import Admin from './components/pages/admin/Admin'
 
 Vue.use(VueRouter)
 
 const routes = [
     { path: '/', name: 'home', component: HomePage },
-    { path: '/login', name: 'login', component: Login, meta: { layout: 'Auth_Layout' } },
+    { path: '/login', name: 'login', component: Login, meta: { layout: 'Auth_Layout', requiresVisitor: true } },
+    { path: '/logout', name: 'logout', component: Logout, meta: { requiresAuth: true } },
+    { path: '/admin', name: 'admin', component: Admin, meta: { requiresAuth: true } },
 ]
 
 const router = new VueRouter({
@@ -28,7 +32,7 @@ router.beforeEach((to, from, next) => {
     } else if (to.matched.some(record => record.meta.requiresVisitor)) {
         if (store.getters.loggedIn) {
             next({
-                name: 'dashboard',
+                name: 'admin',
             })
         } else {
             next()
